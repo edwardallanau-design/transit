@@ -18,6 +18,40 @@
 
 ---
 
+## Project Structure
+
+```
+src/main/java/com/littlepay/transit/
+│
+├── TransitApplication.java          # Spring Boot entry point
+│
+├── config/
+│   └── TransitConfig.java           # Bean wiring (readers, writers, services)
+│
+├── controller/
+│   └── TripController.java          # POST /api/trips (raw CSV body)
+│                                    # POST /api/trips/upload (file upload)
+│
+├── io/
+│   ├── TapReader.java               # Interface: parse tap input
+│   ├── TripWriter.java              # Interface: serialise trip output
+│   └── csv/
+│       ├── TapCsvReader.java        # CSV implementation of TapReader
+│       └── TripCsvWriter.java       # CSV implementation of TripWriter
+│
+├── model/
+│   ├── Tap.java                     # Record: a single tap event
+│   ├── TapType.java                 # Enum: ON / OFF
+│   ├── Trip.java                    # Record: a processed trip
+│   └── TripStatus.java              # Enum: COMPLETED / INCOMPLETE / CANCELLED
+│
+└── service/
+    ├── FarePolicy.java              # Interface: fare calculation contract
+    ├── FareCalculator.java          # Fare matrix implementation of FarePolicy
+    ├── TripProcessor.java           # Core logic: matches taps into trips
+    └── TripService.java             # Orchestrates read → process pipeline
+```
+
 ## How to Run
 
 **Prerequisites:** Java 25, Maven 3.6, Spring Boot 4
