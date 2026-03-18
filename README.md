@@ -149,7 +149,7 @@ curl -X POST http://localhost:8080/api/trips/upload \
 mvn test
 ```
 
-The test suite has 29 tests across five classes:
+The test suite has 33 tests across six classes:
 
 | Class | Type | What it covers |
 |---|---|---|
@@ -157,6 +157,7 @@ The test suite has 29 tests across five classes:
 | `TripProcessorTest` | Unit | COMPLETED / INCOMPLETE / CANCELLED trips, orphaned OFFs, consecutive tap-ONs, out-of-order input, multiple PANs, full spec example |
 | `IntegrationTest` | Integration | Full CSV-string pipeline: parse → process → write → assert output, header, fares, duration, null fields |
 | `TripServiceTest` | Unit (Mockito) | Verifies `TripService.process()` delegates to `TapReader` then `TripProcessor` |
+| `TripControllerTest` | Unit (MockMvc) | HTTP 200 + CSV body for raw endpoint; HTTP 415 for wrong content-type; file upload returns CSV attachment; missing file returns 400 |
 | `TransitApplicationTest` | `@SpringBootTest` | Context loads; `main()` calls `SpringApplication.run()` |
 
 ---
