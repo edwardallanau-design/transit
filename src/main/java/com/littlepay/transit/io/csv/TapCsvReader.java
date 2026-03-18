@@ -20,9 +20,9 @@ public class TapCsvReader implements TapReader {
     public List<Tap> read(Reader reader) throws IOException {
         List<Tap> taps = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(reader)) {
-            String string = br.readLine();
+            br.readLine(); // skip header
             String line;
-            while ((line = string) != null) {
+            while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (!line.isEmpty()) {
                     taps.add(parseLine(line));
